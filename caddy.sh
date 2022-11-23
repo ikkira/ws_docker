@@ -2,12 +2,19 @@
 # FILE="/etc/Caddy"
 domain="$1"
 psname="$2"
+spath="$4"
+dpath="/one"
 uuid="51be9a06-299f-43b9-b713-1ec5eb76e3d7"
 if  [ ! "$3" ] ;then
     uuid=$(uuidgen)
     echo "uuid 将会系统随机生成"
 else
     uuid="$3"
+fi
+if  [ ! "$4" ] ;then
+    echo "默认路径"
+else
+    dpath="$4"
 fi
 cat > /etc/Caddyfile <<'EOF'
 domain
@@ -56,6 +63,7 @@ cat > /etc/v2ray/config.json <<'EOF'
 EOF
 
 sed -i "s/uuid/${uuid}/" /etc/v2ray/config.json
+sed -i "s/path/${dpath}/" /etc/v2ray/config.json
 
 cat > /srv/sebs.js <<'EOF'
  {
